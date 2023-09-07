@@ -5,6 +5,9 @@ public class FilesStorage
     private string projectName;
     private string directoryPath;
 
+    private string settingsPath;
+    private string generatedFilesDirectoryPath;
+
     public FilesStorage(string _projectName)
     {
         projectName = _projectName;
@@ -16,5 +19,9 @@ public class FilesStorage
     private void CreateDirectories()
     {
         Directory.CreateDirectory(directoryPath);
+
+        generatedFilesDirectoryPath = Path.Combine(directoryPath, "generatedFiles");
+
+        settingsPath = Path.Combine(directoryPath, "settings.crypt");
     }
 }
