@@ -1,5 +1,6 @@
 ﻿
 
+[Serializable]
 public struct TokensStruct
 {
     public string discordToken;

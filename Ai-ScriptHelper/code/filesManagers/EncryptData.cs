@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-public class EncryptData
+public static class EncryptData
 {
-    public byte[] EncryptObject(string _objectName,byte[] _dataToEncrypt)
+    public static byte[] EncryptBytes(string _objectName,byte[] _dataToEncrypt)
     {
         string selectedPassword;
 
@@ -16,8 +16,8 @@ public class EncryptData
 
         using (Aes aesAlg = Aes.Create())
         {
-            aesAlg.Key = selectedKey;
             aesAlg.Mode = CipherMode.CFB; // CFB encryption
+            aesAlg.Key = selectedKey;
 
             using (MemoryStream msEncrypt = new MemoryStream())
             {
@@ -34,7 +34,7 @@ public class EncryptData
         }
     }
 
-    public byte[] DecryptObject(string _objectName, byte[] _dataToDecrypt)
+    public static byte[] DecryptBytes(string _objectName, byte[] _dataToDecrypt)
     {
         string selectedPassword;
 
@@ -47,8 +47,8 @@ public class EncryptData
 
         using (Aes aesAlg = Aes.Create())
         {
+            aesAlg.Mode = CipherMode.CFB; // CFB to decrypt (same as encrypt)
             aesAlg.Key = selectedKey;
-            aesAlg.Mode = CipherMode.CFB; // Assurez-vous d'utiliser le même mode de chiffrement qu'à l'encryption.
 
             using (MemoryStream msDecrypt = new MemoryStream(_dataToDecrypt))
             {
@@ -67,11 +67,18 @@ public class EncryptData
         }
     }
 
-    private byte[] ConvertStringToKey(string _stringToConvert)
+    private static byte[] ConvertStringToKey(string _stringToConvert)
     {
         using (SHA256 sha256 = SHA256.Create())
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(_stringToConvert);
+
+            foreach (byte b in sha256.ComputeHash(inputBytes))
+            {
+                Console.Write($"{b}");
+            }
+            Console.WriteLine();
+
             return sha256.ComputeHash(inputBytes);
         }
     }
