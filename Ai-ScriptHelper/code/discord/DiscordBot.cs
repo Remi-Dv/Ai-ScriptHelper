@@ -5,7 +5,7 @@ using System.Reflection;
 
 public class DiscordBot
 {
-    private string discordToken;
+    protected string discordToken;
     private DiscordSocketClient client;
 
     private CommandService commands;

@@ -4,6 +4,7 @@ public static class Program
     public static FilesStorage filesStorage;
 
     public static DiscordBot discordBot;
+    public static OpenAi openAi;
 
     public static void Main(string[] args)
     {
@@ -17,5 +18,10 @@ public static class Program
     {
         discordBot = new DiscordBot(_discordToken);
         discordBot.RunBotAsync().GetAwaiter().GetResult();
+    }
+
+    public static void StartOpenAi(string _openAiToken)
+    {
+        openAi = new OpenAi(_openAiToken);
     }
 }
